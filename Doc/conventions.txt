@@ -1,0 +1,41 @@
+Conventions de nommages : 
+-------------------------
+
+Constantes : MA_CONSTANTE
+
+Variables : maVar
+
+Fonctions : exempleDeFonction()
+
+Conventions de commentaires : 
+----------------------------
+
+commentaires simples sur une ligne : /* mon commentaire */
+
+commentaires multilignes : 
+/*
+  blablabla
+  blablalba
+*/
+
+commentaires de Fonctions : 
+
+/**
+ * Descriptif de la fonction 
+ * @param type description du param
+ * @return type description du return
+ */
+ maFonction()
+
+ Convention pour les accolades de blocs :
+ ----------------------------------------
+
+ if()             OU      if() moncode;
+ {
+   moncode;
+ }
+
+fonction()
+{
+  moncode;
+}
