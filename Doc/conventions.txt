@@ -1,4 +1,4 @@
-Conventions de nommages : 
+  Conventions de nommages : 
 -------------------------
 
 Constantes : MA_CONSTANTE
