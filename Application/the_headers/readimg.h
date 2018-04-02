@@ -6,7 +6,7 @@
 /**
  * readimg
  * -------
- * Fonction utilitaire pour lire une image
+ * Fichier utilitaire pour lire une image
  * 
  * Réalisé par Damien Wykland et Ancelin Serre
  */

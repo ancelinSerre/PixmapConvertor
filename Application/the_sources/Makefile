@@ -3,10 +3,10 @@ LIB_DIR=../../lib
 INC_DIR=../the_headers
 BIN_DIR=../bin
 
-OPTIM=-O2
+OPTIM=
 OPTIONS= $(OPTIM) -g
 
-OBJECTS=readimg.o struct.o main.o writeimg.o
+OBJECTS=readimg.o struct.o main.o writeimg.o processing.o
 FINAL=main
 
 # Liste des commandes n'étant pas liés à des fichiers
@@ -15,6 +15,7 @@ FINAL=main
 #Commande pour build main et le placer dans le dossier bin
 $(BIN_DIR)/main : $(OBJECTS)
 	$(CC) $(OPTIONS) -o $@ $^
+	make clean_obj
 
 # compile tous les .c en prenant en compte les .h en .o (fichiers objets intermédiaires)
 %.o : %.c $(INC_DIR)/%.h

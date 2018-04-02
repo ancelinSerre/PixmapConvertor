@@ -3,7 +3,6 @@
 #include <stdint.h>
 #include <inttypes.h>
 #include "../the_headers/readimg.h"
-#include "../the_headers/struct.h"
 
 image *readImage(FILE *f)
 {
@@ -31,7 +30,7 @@ image *readImage(FILE *f)
   /* Initialisation de l'image */
   image *img = newImage(type, width, height, maxValue);
 
-  int i = 0;
+  unsigned long long i = 0;
   int nbRead = 3;
   /* On complète le tableau data de l'image */
   while (nbRead == 3) {

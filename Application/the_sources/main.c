@@ -3,9 +3,11 @@
 #include <unistd.h>
 #include <ctype.h>
 #include <inttypes.h>
+#include <string.h>
 #include "../the_headers/struct.h"
 #include "../the_headers/readimg.h"
 #include "../the_headers/writeimg.h"
+#include "../the_headers/processing.h"
 
 int main(int argc, char **argv)
 {
@@ -20,10 +22,11 @@ int main(int argc, char **argv)
   int flag = -1;
   int c;
   int std = -1;
-  char *filename;
+  char *filename = malloc(100);
   FILE *f;
   FILE *ff;
   image *img = NULL;
+  image *res = NULL;
 
   while ((c = getopt(argc, argv, "gb")) != -1)
   {
@@ -53,7 +56,6 @@ int main(int argc, char **argv)
 
   if (optind < argc)
   {
-    filename = malloc(100);
     sprintf(filename, "%s", argv[optind]);
     std = 0;
   }
@@ -93,39 +95,68 @@ int main(int argc, char **argv)
   else
   {
     printf("Pas de nom de fichier ou mauvais nom de fichier, on travaille sur l'entrée STD\n");
+    sprintf(filename,"../../Exemples/image.ppm");
     img = readSTD();
     if (img == NULL)
-      {
-        printf("Erreur lors de la lecture du fichier\n");
-        return 1;
-      }
-      printf("Lecture de l'image OK\n");
+    {
+      printf("Erreur lors de la lecture du fichier\n");
+      return 1;
+    }
+    printf("Lecture de l'image OK\n");
   }
+
 
   /**
    * TRAITEMENTS
    */
 
+  if (flag)
+  {
+    res = convertPGM(img);
+  }
+  else
+  {
+    res = convertPBM(img);  
+  }
 
   /**
    * ECRITURES
    */
 
-/* POUR TESTER ECRITURE ONLY POUR L'INSTANT */
-  ff = fopen("test.ppm", "w");
+  int pos = (int)strlen(filename);
+
+  if (flag)
+  {
+    filename[pos - 2] = 'g';
+  }
+  else
+  {
+    filename[pos - 2] = 'b';
+  }
+
+  /* POUR TESTER ECRITURE ONLY POUR L'INSTANT */
+
+  ff = fopen(filename, "w");
   if (ff)
+  {
+    if (flag)
     {
-      writeImagePPM(ff,img);
-      fclose(ff);
+      printf("On sauve l'image au format PGM dans le fichier %s \n", filename);
+      writeImagePGM(ff, res);
     }
     else
     {
-      printf("Erreur lors de la création du fichier\n");
-      return 1;
+      printf("On sauve l'image au format PBM dans le fichier %s \n", filename);
+      writeImagePBM(ff, res);
     }
 
-
-
+    fclose(ff);
+  }
+  else
+  {
+    printf("Erreur lors de la création du fichier\n");
+    return 1;
+  }
 
   return 0;
 }
