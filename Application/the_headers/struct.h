@@ -3,6 +3,8 @@
 
 /* Structure contenant la déclaration des types permettant la manipulation des images */
 
+#include <inttypes.h> 
+
 /* Type énuméré des types d'image */
 typedef enum {
   P1 = 1,

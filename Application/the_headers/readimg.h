@@ -2,7 +2,7 @@
 #define _READIMG_H
 
 #include "../the_headers/struct.h"
-
+#include <stdio.h>
 /**
  * readimg
  * -------

@@ -87,8 +87,10 @@ int main(int argc, char **argv)
   }
   else
   {
-    //img = readSTD();
+    img = readSTD();
   }
+
+  
 
 
   return 0;
