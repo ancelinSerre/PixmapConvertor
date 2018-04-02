@@ -10,20 +10,24 @@ image *readImage(FILE *f)
   /* Récupération des paramètres pour l'init de l'image */
   char type[2];
   int x;
-  //fgets(type, 2, f);
+
   x=fscanf(f, "%s ", type);
   if (type[0] != 'P' && type[1] != '3')
   {
     return NULL;
-  }else {
-    printf("ok P3 \n");
   }
   uint32_t width;
   uint32_t height;
   x=fscanf(f, "%lu %lu", (unsigned long*)&width, (unsigned long*)&height);
+  if(x != 2) {
+    return NULL;
+  }
   uint16_t maxValue;
   x=fscanf(f, "%u", (unsigned int*)&maxValue);
-  printf("ok lect w : %lu h : %lu  max : %u \n", (unsigned long)width, (unsigned long)height, maxValue);
+  if(x != 1) {
+    return NULL;
+  }
+
   /* Initialisation de l'image */
   image *img = newImage(type, width, height, maxValue);
 
@@ -51,6 +55,7 @@ image *newImage(char type[2], uint32_t width, uint32_t height, uint16_t maxValue
   img->height = height;
   img->width = width;
   img->maxValue = maxValue;
+  /* Mémoire allouée, ne pas oublier de libérer */
   img->data = (uint64_t*)malloc(width * height * sizeof(uint64_t));
   return img;
 }
@@ -59,20 +64,24 @@ image *readSTD() {
   /* Récupération des paramètres pour l'init de l'image */
   char type[2];
   int x;
-  //fgets(type, 2, f);
+
   x=scanf("%s", type);
   if (type[0] != 'P' && type[1] != '3')
   {
     return NULL;
-  }else {
-    printf("ok P3 \n");
   }
   uint32_t width;
   uint32_t height;
   x=scanf("%lu %lu", (unsigned long*)&width, (unsigned long*)&height);
+  if(x != 2) {
+    return NULL;
+  }
   uint16_t maxValue;
   x=scanf("%u",(unsigned int*) &maxValue);
-  printf("ok lect w : %lu h : %lu  max : %u \n", (unsigned long)width, (unsigned long)height, maxValue);
+  if(x != 1) {
+    return NULL;
+  }
+
   /* Initialisation de l'image */
   image *img = newImage(type, width, height, maxValue);
 
@@ -86,11 +95,16 @@ image *readSTD() {
 
     x=scanf("%u%u%u", (unsigned int*)&red, (unsigned int*)&green, (unsigned int*)&blue);
 
-    printf("LECTURE : %u g : %u b : %u \n", red, green, blue);
+    if(x != 3) {
+      return NULL;
+    }
+    if( (red>img->maxValue) || (green>img->maxValue) || (blue>img->maxValue) ) {
+      printf("Valeur entrée supérieur a la valeur max d'une couleur. \n");
+      return NULL;
+    }
 
     img->data[i] = fillPixel(red,green,blue);
     i++;
   }
-  printf("aaaaa\n");
   return img;
 }

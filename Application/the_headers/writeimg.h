@@ -14,10 +14,10 @@
 
 /**
  * Ecrit un fichier au format PPM
- * @param char* fileName le nom du fichier à écrire
+ * @param FILE *f le fichier dans lequel ecrire
  * @param image* img la structure de l'image à écrire
  */
-void writeImagePPM(char* filename, image* img);
+void writeImagePPM(FILE *f, image* img);
 
 
 #endif /* _WRITEIMG_H */

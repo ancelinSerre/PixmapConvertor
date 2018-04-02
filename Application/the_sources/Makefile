@@ -6,7 +6,7 @@ BIN_DIR=../bin
 OPTIM=-O2
 OPTIONS= $(OPTIM) -g
 
-OBJECTS=readimg.o struct.o main.o write_img.o
+OBJECTS=readimg.o struct.o main.o writeimg.o
 FINAL=main
 
 # Liste des commandes n'étant pas liés à des fichiers

@@ -5,11 +5,12 @@
 #include <inttypes.h>
 #include "../the_headers/struct.h"
 #include "../the_headers/readimg.h"
+#include "../the_headers/writeimg.h"
 
 int main(int argc, char **argv)
 {
   /**
-   * Lecture des arguments
+   * LECTURE DES ARGUMENTS
    */
 
   /** Etant donné que nous avons que deux possibilités de traitements (PBM ou PGM),
@@ -21,6 +22,7 @@ int main(int argc, char **argv)
   int std = -1;
   char *filename;
   FILE *f;
+  FILE *ff;
   image *img = NULL;
 
   while ((c = getopt(argc, argv, "gb")) != -1)
@@ -64,9 +66,11 @@ int main(int argc, char **argv)
    * Fin de lecture des arguments
    */
 
+  /**
+   *  Appel des fonctions concernées suivant les choix utilisateurs 
+   */
   if (!std)
   {
-    printf("filename : %s\n", filename);
     /* Lecture du fichier */
     f = fopen(filename, "r");
     if (f)
@@ -78,6 +82,7 @@ int main(int argc, char **argv)
         printf("Erreur lors de la lecture du fichier\n");
         return 1;
       }
+      printf("Lecture de l'image OK\n");
     }
     else
     {
@@ -87,10 +92,39 @@ int main(int argc, char **argv)
   }
   else
   {
+    printf("Pas de nom de fichier ou mauvais nom de fichier, on travaille sur l'entrée STD\n");
     img = readSTD();
+    if (img == NULL)
+      {
+        printf("Erreur lors de la lecture du fichier\n");
+        return 1;
+      }
+      printf("Lecture de l'image OK\n");
   }
 
-  
+  /**
+   * TRAITEMENTS
+   */
+
+
+  /**
+   * ECRITURES
+   */
+
+/* POUR TESTER ECRITURE ONLY POUR L'INSTANT */
+  ff = fopen("test.ppm", "w");
+  if (ff)
+    {
+      writeImagePPM(ff,img);
+      fclose(ff);
+    }
+    else
+    {
+      printf("Erreur lors de la création du fichier\n");
+      return 1;
+    }
+
+
 
 
   return 0;
