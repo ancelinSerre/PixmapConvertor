@@ -11,12 +11,13 @@ image *readImage(FILE *f)
   int x;
 
   x=fscanf(f, "%s ", type);
-  if (type[0] != 'P' && type[1] != '3')
+  if (!(type[0] == 'P' && type[1] == '3'))
   {
     return NULL;
   }
   uint32_t width;
   uint32_t height;
+  // **
   x=fscanf(f, "%lu %lu", (unsigned long*)&width, (unsigned long*)&height);
   if(x != 2) {
     return NULL;
@@ -65,7 +66,7 @@ image *readSTD() {
   int x;
 
   x=scanf("%s", type);
-  if (type[0] != 'P' && type[1] != '3')
+  if (!(type[0] == 'P' && type[1] == '3'))
   {
     return NULL;
   }

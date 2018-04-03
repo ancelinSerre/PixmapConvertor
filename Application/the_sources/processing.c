@@ -10,7 +10,7 @@ image *convertPGM(image *img)
   image *res = newImage("P2", img->width, img->height, img->maxValue);
   unsigned long max = (img->width * img->height);
 
-  /* choix des constantes a, b et c : */
+  /* choix des constantes a, b et c :  ** en define ? */
   float a = 0.299;
   float b = 0.587;
   float c = 0.114;
@@ -34,7 +34,6 @@ image *convertPBM(image *img)
   for (int i = 0; i < max; i++)
   {
     long double temp = (long double)(getRed(img->data[i]) * getGreen(img->data[i]) * getBlue(img->data[i]));
-    //printf("%llu ,,, %llu ,,,,,,= %lf\n", temp,puissance(img->maxValue,3), (double)(temp / puissance(img->maxValue,3)) );
     if( (temp / (long double)puissance(img->maxValue,3)) > alpha ) {
       res->data[i] = 0;
     }else {

@@ -15,7 +15,8 @@ int main(int argc, char **argv)
    * LECTURE DES ARGUMENTS
    */
 
-  /** Etant donné que nous avons que deux possibilités de traitements (PBM ou PGM),
+  /** 
+   * Etant donné que nous avons que deux possibilités de traitements (PBM ou PGM),
    * nous pouvons stocker le flag dans une variable binaire.
    * Convention : 1 pour le flag g, 0 pour le flag b.
    */
