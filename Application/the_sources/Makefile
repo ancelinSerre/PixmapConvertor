@@ -3,19 +3,18 @@ LIB_DIR=../../lib
 INC_DIR=../the_headers
 BIN_DIR=../bin
 
-OPTIM=
-OPTIONS= $(OPTIM) -g
+OPTIM=-O2
+OPTIONS= $(OPTIM) -fPIC
 
 OBJECTS=readimg.o struct.o main.o writeimg.o processing.o
-FINAL=main
 
+all: $(BIN_DIR)/main $(LIB_DIR)/pixmaplib.a $(LIB_DIR)/pixmaplib.so clean_obj
 # Liste des commandes n'étant pas liés à des fichiers
 .PHONY: clean all clean_obj
 
 #Commande pour build main et le placer dans le dossier bin
 $(BIN_DIR)/main : $(OBJECTS)
 	$(CC) $(OPTIONS) -o $@ $^
-	make clean_obj
 
 # compile tous les .c en prenant en compte les .h en .o (fichiers objets intermédiaires)
 %.o : %.c $(INC_DIR)/%.h
@@ -24,12 +23,23 @@ $(BIN_DIR)/main : $(OBJECTS)
 main.o : main.c 
 	$(CC) $(OPTIONS) -c $^
 
-# Commande de nettoyage intermediaire (sans executables)
+# Bibliothèque statique
+$(LIB_DIR)/pixmaplib.a: $(OBJECTS)
+	rm -f $@
+	ar -r $@ $^
+
+# Bibliothèque dynamique
+$(LIB_DIR)/pixmaplib.so: $(OBJECTS)
+	rm -f $@
+	gcc -shared -o $@ $^
+
+# Commande de nettoyage intermediaire (sans executables et lib)
 clean_obj:
 	rm -rf *.o
 	rm -rf $(INC_DIR)/*.gch
 
-# Commande de nettoyage totale (avec executables)
+# Commande de nettoyage totale (avec executables et lib)
 clean:
 	make clean_obj
-	rm -rf $(BIN_DIR)/$(FINAL)
+	rm -rf $(BIN_DIR)/main
+	rm -rf $(LIB_DIR)/pixmaplib.a $(LIB_DIR)/pixmaplib.so
