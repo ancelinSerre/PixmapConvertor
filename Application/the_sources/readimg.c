@@ -18,12 +18,12 @@ image *readImage(FILE *f)
   uint32_t width;
   uint32_t height;
   // **
-  x=fscanf(f, "%lu %lu", (unsigned long*)&width, (unsigned long*)&height);
+  x=fscanf(f,"%"SCNu32 "%"SCNu32, &width, &height);
   if(x != 2) {
     return NULL;
   }
   uint16_t maxValue;
-  x=fscanf(f, "%u", (unsigned int*)&maxValue);
+  x=fscanf(f, "%"SCNu16, &maxValue);
   if(x != 1) {
     return NULL;
   }
@@ -39,7 +39,7 @@ image *readImage(FILE *f)
     uint16_t green;
     uint16_t blue;
 
-    nbRead = fscanf(f,"%u %u %u", (unsigned int*)&red,(unsigned int*)&green, (unsigned int*)&blue);
+    nbRead = fscanf(f,"%"SCNu16 "%"SCNu16 "%"SCNu16, &red,&green,&blue);
 
     img->data[i] = fillPixel(red,green,blue);
     i++;
@@ -72,12 +72,12 @@ image *readSTD() {
   }
   uint32_t width;
   uint32_t height;
-  x=scanf("%lu %lu", (unsigned long*)&width, (unsigned long*)&height);
+  x=scanf("%"SCNu32 "%"SCNu32, &width, &height);
   if(x != 2) {
     return NULL;
   }
   uint16_t maxValue;
-  x=scanf("%u",(unsigned int*) &maxValue);
+  x=scanf("%"SCNu16, &maxValue);
   if(x != 1) {
     return NULL;
   }
@@ -93,7 +93,7 @@ image *readSTD() {
     uint16_t green = 0;
     uint16_t blue = 0;
 
-    x=scanf("%u%u%u", (unsigned int*)&red, (unsigned int*)&green, (unsigned int*)&blue);
+    x=scanf("%"SCNu16 "%"SCNu16 "%"SCNu16, &red, &green, &blue);
 
     if(x != 3) {
       return NULL;
