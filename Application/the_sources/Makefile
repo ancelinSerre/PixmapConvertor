@@ -4,7 +4,7 @@ INC_DIR=../the_headers
 BIN_DIR=../bin
 
 OPTIM=-O2
-OPTIONS= $(OPTIM) -fPIC
+OPTIONS= $(OPTIM) -g -fPIC
 
 OBJECTS=readimg.o struct.o main.o writeimg.o processing.o
 

@@ -10,37 +10,47 @@ image *readImage(FILE *f)
   char type[2];
   int x;
 
+  /* Lecture du nombre magique */
   x=fscanf(f, "%s ", type);
   if (!(type[0] == 'P' && type[1] == '3'))
   {
+    /* Si le nombre magique est différent de P3, erreur */
     return NULL;
   }
   uint32_t width;
   uint32_t height;
-  // **
-  x=fscanf(f, "%lu %lu", (unsigned long*)&width, (unsigned long*)&height);
+  /* Lecture de la largeur et de la hauteur */
+  x=fscanf(f,"%"SCNu32 "%"SCNu32, &width, &height);
   if(x != 2) {
+    /* Si on a pas deux lectures, erreur */
     return NULL;
   }
   uint16_t maxValue;
-  x=fscanf(f, "%u", (unsigned int*)&maxValue);
+  /* Lecture de la valeur max d'une couleur */
+  x=fscanf(f, "%"SCNu16, &maxValue);
   if(x != 1) {
+    /* Si lecture incorrecte, retour avec erreur */
     return NULL;
   }
 
   /* Initialisation de l'image */
   image *img = newImage(type, width, height, maxValue);
-
+  int nbread;
   unsigned long long i = 0;
-  int nbRead = 3;
   /* On complète le tableau data de l'image */
-  while (nbRead == 3) {
+  while (i < (img->width * img->height)) {
     uint16_t red;
     uint16_t green;
     uint16_t blue;
 
-    nbRead = fscanf(f,"%u %u %u", (unsigned int*)&red,(unsigned int*)&green, (unsigned int*)&blue);
+    nbread = fscanf(f,"%"SCNu16 "%"SCNu16 "%"SCNu16, &red,&green,&blue);
+    if(nbread != 3) {
+      free(img->data);
+      free(img);
+      return NULL;
+    }
 
+    /* Transformation de trois variables de couleurs en une variable de taille 64 bits */
     img->data[i] = fillPixel(red,green,blue);
     i++;
   }
@@ -55,7 +65,7 @@ image *newImage(char type[2], uint32_t width, uint32_t height, uint16_t maxValue
   img->height = height;
   img->width = width;
   img->maxValue = maxValue;
-  /* Mémoire allouée, ne pas oublier de libérer */
+  /* Mémoire allouée qui sera libérée plus tard dans le main */
   img->data = (uint64_t*)malloc(width * height * sizeof(uint64_t));
   return img;
 }
@@ -65,20 +75,26 @@ image *readSTD() {
   char type[2];
   int x;
 
+  /* Lecture du nombre magique */
   x=scanf("%s", type);
   if (!(type[0] == 'P' && type[1] == '3'))
   {
+    /* Si le nombre magique est différent de P3, erreur */
     return NULL;
   }
   uint32_t width;
   uint32_t height;
-  x=scanf("%lu %lu", (unsigned long*)&width, (unsigned long*)&height);
+  /* Lecture de la largeur et de la hauteur */
+  x=scanf("%"SCNu32 "%"SCNu32, &width, &height);
   if(x != 2) {
+    /* Si on a pas deux lectures, erreur */
     return NULL;
   }
   uint16_t maxValue;
-  x=scanf("%u",(unsigned int*) &maxValue);
+  /* Lecture de la valeur max d'une couleur */
+  x=scanf("%"SCNu16, &maxValue);
   if(x != 1) {
+    /* Si lecture incorrecte, retour avec erreur */
     return NULL;
   }
 
@@ -93,7 +109,7 @@ image *readSTD() {
     uint16_t green = 0;
     uint16_t blue = 0;
 
-    x=scanf("%u%u%u", (unsigned int*)&red, (unsigned int*)&green, (unsigned int*)&blue);
+    x=scanf("%"SCNu16 "%"SCNu16 "%"SCNu16, &red, &green, &blue);
 
     if(x != 3) {
       return NULL;

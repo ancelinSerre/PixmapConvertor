@@ -26,8 +26,8 @@ image *convertPGM(image *img);
 image *convertPBM(image *img);
 
 /**
- * Calcul base à la puissance exp
+ * Calcul de la valeur 'val' à la puissance 'exposant'
  */
-unsigned long long puissance(unsigned int base, unsigned int exp);
+unsigned long long puissance(unsigned int val, unsigned int exposant);
 
 #endif /* _PROCESSING_H */
