@@ -45,6 +45,7 @@ int main(int argc, char **argv)
       else
         printf("Caractère inconnu `\\x%x'.\n", optopt);
     default:
+      free(filename);
       return 1;
     }
   }
@@ -52,6 +53,7 @@ int main(int argc, char **argv)
   if (flag == -1)
   {
     printf("Merci de préciser une option en paramètre ! (-g ou -b) \n");
+    free(filename);
     return 1;
   }
 
@@ -83,6 +85,7 @@ int main(int argc, char **argv)
       if (img == NULL)
       {
         printf("Erreur lors de la lecture du fichier\n");
+        free(filename);
         return 1;
       }
       printf("Lecture de l'image OK\n");
@@ -90,6 +93,7 @@ int main(int argc, char **argv)
     else
     {
       printf("Erreur lors de l'ouverture du fichier\n");
+      free(filename);
       return 1;
     }
   }
@@ -101,6 +105,7 @@ int main(int argc, char **argv)
     if (img == NULL)
     {
       printf("Erreur lors de la lecture du fichier\n");
+      free(filename);
       return 1;
     }
     printf("Lecture de l'image OK\n");
@@ -156,8 +161,18 @@ int main(int argc, char **argv)
   else
   {
     printf("Erreur lors de la création du fichier\n");
+    free(img->data);
+    free(img);
+    free(res->data);
+    free(res);
+    free(filename);
     return 1;
   }
+  free(img->data);
+  free(img);
+  free(res->data);
+  free(res);
+  free(filename);
 
   return 0;
 }

@@ -34,7 +34,7 @@ image *readImage(FILE *f)
   unsigned long long i = 0;
   int nbRead = 3;
   /* On complète le tableau data de l'image */
-  while (nbRead == 3) {
+  while (i < (img->width * img->height)) {
     uint16_t red;
     uint16_t green;
     uint16_t blue;
