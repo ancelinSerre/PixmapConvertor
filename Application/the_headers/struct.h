@@ -1,12 +1,17 @@
 #ifndef _STRUCT_H
 #define _STRUCT_H
 
+/**
+ * Réalisé par Damien Wykland et Ancelin Serre 
+ */
+
 /* Structure contenant la déclaration des types permettant la manipulation des images */
 
 #include <inttypes.h> 
 
 /* Type énuméré des types d'image */
-typedef enum {
+typedef enum 
+{
   P1 = 1,
   P2 = 2,
   P3 = 3

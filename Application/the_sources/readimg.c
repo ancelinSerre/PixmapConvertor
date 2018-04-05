@@ -4,6 +4,10 @@
 #include <inttypes.h>
 #include "../the_headers/readimg.h"
 
+/**
+ * Réalisé par Damien Wykland et Ancelin Serre 
+ */
+
 image *readImage(FILE *f)
 {
   /* Récupération des paramètres pour l'init de l'image */
@@ -21,17 +25,15 @@ image *readImage(FILE *f)
   uint32_t height;
   /* Lecture de la largeur et de la hauteur */
   x=fscanf(f,"%"SCNu32 "%"SCNu32, &width, &height);
-  if(x != 2) {
+  if(x != 2)
     /* Si on a pas deux lectures, erreur */
     return NULL;
-  }
   uint16_t maxValue;
   /* Lecture de la valeur max d'une couleur */
   x=fscanf(f, "%"SCNu16, &maxValue);
-  if(x != 1) {
+  if(x != 1) 
     /* Si lecture incorrecte, retour avec erreur */
     return NULL;
-  }
 
   /* Initialisation de l'image */
   image *img = newImage(type, width, height, maxValue);
@@ -44,7 +46,8 @@ image *readImage(FILE *f)
     uint16_t blue;
 
     nbread = fscanf(f,"%"SCNu16 "%"SCNu16 "%"SCNu16, &red,&green,&blue);
-    if(nbread != 3) {
+    if(nbread != 3)
+    {
       free(img->data);
       free(img);
       return NULL;
@@ -70,7 +73,8 @@ image *newImage(char type[2], uint32_t width, uint32_t height, uint16_t maxValue
   return img;
 }
 
-image *readSTD() {
+image *readSTD() 
+{
   /* Récupération des paramètres pour l'init de l'image */
   char type[2];
   int x;
@@ -86,24 +90,23 @@ image *readSTD() {
   uint32_t height;
   /* Lecture de la largeur et de la hauteur */
   x=scanf("%"SCNu32 "%"SCNu32, &width, &height);
-  if(x != 2) {
+  if(x != 2)
     /* Si on a pas deux lectures, erreur */
     return NULL;
-  }
   uint16_t maxValue;
   /* Lecture de la valeur max d'une couleur */
   x=scanf("%"SCNu16, &maxValue);
-  if(x != 1) {
+  if(x != 1)
     /* Si lecture incorrecte, retour avec erreur */
     return NULL;
-  }
 
   /* Initialisation de l'image */
   image *img = newImage(type, width, height, maxValue);
 
   int i = 0;
   /* On complète le tableau data de l'image */
-  while (i < (img->width * img->height)) {
+  while (i < (img->width * img->height))
+  {
     printf("Pixel %d: \n", i);
     uint16_t red = 0;
     uint16_t green = 0;
@@ -111,10 +114,11 @@ image *readSTD() {
 
     x=scanf("%"SCNu16 "%"SCNu16 "%"SCNu16, &red, &green, &blue);
 
-    if(x != 3) {
+    if(x != 3)
       return NULL;
-    }
-    if( (red>img->maxValue) || (green>img->maxValue) || (blue>img->maxValue) ) {
+
+    if( (red>img->maxValue) || (green>img->maxValue) || (blue>img->maxValue) ) 
+    {
       printf("Valeur entrée supérieur a la valeur max d'une couleur. \n");
       return NULL;
     }

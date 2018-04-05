@@ -4,6 +4,10 @@
 #include <inttypes.h>
 #include "../the_headers/writeimg.h"
 
+/**
+ * Réalisé par Damien Wykland et Ancelin Serre 
+ */
+
 void writeImagePPM(FILE *f, image *img)
 {
   /* Ecriture du nombre magique */
@@ -43,9 +47,7 @@ void writeImagePGM(FILE *f, image *img)
     fprintf(f, "%"SCNu64 " ", img->data[i - 1]);
     /* Permet de rendre un fichier image plus lisible en affichant 6 pixels par ligne */
     if (i % 6 == 0)
-    {
       fprintf(f, "\n");
-    }
   }
 
   return;
@@ -65,9 +67,7 @@ void writeImagePBM(FILE *f, image *img)
     fprintf(f, "%"SCNu64 " ", img->data[i - 1]);
     /* Permet de rendre un fichier image plus lisible en affichant 6 pixels par ligne */
     if (i % 6 == 0)
-    {
       fprintf(f, "\n");
-    }
   }
 
   return;
